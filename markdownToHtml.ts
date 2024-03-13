@@ -1,3 +1,36 @@
+const checkForInvalidSyntax = (mdContent: string): Record<string, string> => {
+  const invalidFormat: Record<string, string> = {};
+
+  // Define constants for each regex
+  const nestedFormatRegex =
+    /\s(\*\*|_|`)(\*\*|_|`){1,}([^ \r\n]+.*[^ \r\n]+)\1\s/g;
+  const infiniteFormatRegex = /\s(\*\*|_|`)[^ *_`\r\n]+(?!.*\1).*\r?\n/g;
+  const missingStartFormatRegex = /(^|\n)[^(**)(_)(`)]*^ *_`\r\n\s/g;
+
+  const nestedFormat = [...mdContent.matchAll(nestedFormatRegex)];
+  nestedFormat.forEach((format) => {
+    const [matched] = format;
+    invalidFormat[matched.trim()] =
+      "Embedding styles within each other is prohibited";
+  });
+
+  const infiniteFormat = [...mdContent.matchAll(infiniteFormatRegex)];
+  infiniteFormat.forEach((format) => {
+    const [matched] = format;
+    invalidFormat[matched.trim()] =
+      "Formatting that does not terminate is forbidden";
+  });
+
+  const missingStartFormat = [...mdContent.matchAll(missingStartFormatRegex)];
+  missingStartFormat.forEach((format) => {
+    const [matched] = format;
+    invalidFormat[matched.trim()] =
+      "Formatting that lacks an initial style marker is not permitted";
+  });
+
+  return invalidFormat;
+};
+
 // function for REGEXP to convert html tag. ie. <TAG> => &lt;TAG*gt;
 const formatTag = (html: string): string => {
   return html.replace(/</g, "<").replace(/\>/g, ">");
@@ -50,13 +83,8 @@ const formatMD = (mdstr: string): string => {
 
   // text decoration: bold, italic, underline, strikethrough, highlight
   mdstr = mdstr
-    .replace(textDecoRegex, "<b><em>$1</em></b>")
     .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-    .replace(/_(.*?)_/g, "<em>$1</em>")
-    .replace(/___(\w.*?[^\\])___/gm, "<b><em>$1</em></b>")
-    .replace(/__(\w.*?[^\\])__/gm, "<u>$1</u>")
-    .replace(/~~(\w.*?)~~/gm, "<del>$1</del>")
-    .replace(/\^\^(\w.*?)\^\^/gm, "<ins>$1</ins>");
+    .replace(/_(.*?)_/g, "<em>$1</em>");
 
   // indent as code-block
   mdstr = mdstr.replace(indentRegex, (m: string, p: string): string => {
@@ -72,6 +100,13 @@ const formatMD = (mdstr: string): string => {
 };
 
 export const simpleMarkdown = (mdText: string): string => {
+  const errors = checkForInvalidSyntax(mdText);
+  if (Object.entries(errors).length > 0) {
+    throw new Error(
+      `invalid markdown <details are below>\n${JSON.stringify(errors, null, 2)}`
+    );
+  }
+
   // first, handle syntax for code-block
   let pos1: number = 0,
     pos2: number = 0,
