@@ -64,7 +64,7 @@ const formatMD = (mdstr: string): string => {
   return mdstr.replace(/\\([`_~\*\+\-\.\^\\\<\>\(\)\[\]])/gm, "$1");
 };
 
-export function simpleMarkdown(mdText: string) {
+export const simpleMarkdown = (mdText: string): string => {
   // first, handle syntax for code-block
   let pos1: number = 0,
     pos2: number = 0,
@@ -76,10 +76,10 @@ export function simpleMarkdown(mdText: string) {
   while ((pos1 = mdText.indexOf("<code>")) >= 0) {
     pos2 = mdText.indexOf("</code>", pos1);
     mdHTML +=
-      formatMD(mdText.substr(0, pos1)) +
-      mdText.substr(pos1 + 6, pos2 > 0 ? pos2 - pos1 - 6 : mdText.length);
-    mdText = mdText.substr(pos2 + 7);
+      formatMD(mdText.slice(0, pos1)) +
+      mdText.slice(pos1 + 6, pos2 > 0 ? pos2 : mdText.length);
+    mdText = mdText.slice(pos2 + 7);
   }
 
   return mdHTML + formatMD(mdText);
-}
+};
