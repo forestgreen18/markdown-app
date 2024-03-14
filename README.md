@@ -54,3 +54,6 @@ npm run start -- .\\test-markdown.md --out=result.html
 ```
 
 ## Revert commit
+
+SHA:
+`37e5eaf3d3e2ac03af0bac7ba7793bc2255bae5c`
