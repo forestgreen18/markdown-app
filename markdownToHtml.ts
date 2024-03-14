@@ -40,30 +40,20 @@ const formatTag = (html: string): string => {
 const formatCode = (m: string, p1: string, p2: string): string => {
   const keywordRegex =
     /(\s)(function|return|var|let|const|if|then|else|elseif|end|for|next|do|while|loop|continue|break|case|switch|try|catch|finally)(\s)/gim;
-  const commentRegex = /^\/\/(.*)/gm;
-  const commentSpaceRegex = /\s\/\/(.*)/gm;
 
   p2 = p2
     .replace(/</g, "<")
     .replace(/\>/g, ">")
     .replace(/\t/g, "   ")
-    .replace(commentRegex, "<rem>//$1</rem>")
-    .replace(commentSpaceRegex, " <rem>//$1</rem>")
-    .replace(keywordRegex, "$1<b>$2</b>$3");
+    .replace(keywordRegex, "$1<strong>$2</strong>$3");
 
-  return `<pre${p1}><code>${p2}</code></pre>`;
+  return `\n<pre><code>${p2}</code></pre>`;
 };
 
 // function to convert mdString into HTML string
 const formatMD = (mdstr: string): string => {
   const hrRegex = /^-{3,}|^\_{3,}|^\*{3,}$/gm;
   const codeBlockRegex = /``(.*?)``/gm;
-  const blockquoteRegex = /^\>\> (.*$)/gm;
-  const textDecoRegex = /\*\*\*(\w.*?[^\\])\*\*\*/gm;
-  const indentRegex = /^ {4,10}(.*)/gm;
-
-  // horizontal rule => <hr>
-  mdstr = mdstr.replace(hrRegex, "<hr>").replace(/\n\n<hr\>/g, "\n<br><hr>");
 
   // inline code-block: `code-block` => <code>code-block</code>
   mdstr = mdstr.replace(codeBlockRegex, (m: string, p: string): string => {
@@ -71,32 +61,27 @@ const formatMD = (mdstr: string): string => {
   });
   mdstr = mdstr.replace(/`(.*?)`/gm, "<code>$1</code>");
 
-  // blockquote, max 2 levels => <blockquote>{text}</blockquote>
-  mdstr = mdstr
-    .replace(
-      blockquoteRegex,
-      "<blockquote><blockquote>$1</blockquote></blockquote>"
-    )
-    .replace(/^\> (.*$)/gm, "<blockquote>$1</blockquote>")
-    .replace(/<\/blockquote\>\n<blockquote\>/g, "\n<br>")
-    .replace(/<\/blockquote\>\n<br\><blockquote\>/g, "\n<br>");
-
   // text decoration: bold, italic, underline, strikethrough, highlight
   mdstr = mdstr
     .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
     .replace(/_(.*?)_/g, "<em>$1</em>");
 
-  // indent as code-block
-  mdstr = mdstr.replace(indentRegex, (m: string, p: string): string => {
-    return `<pre><code>${formatTag(p)}</code></pre>`;
-  });
-  mdstr = mdstr.replace(/^\t(.*)/gm, (m: string, p: string): string => {
-    return `<pre><code>${formatTag(p)}</code></pre>`;
-  });
-  mdstr = mdstr.replace(/<\/code\><\/pre\>\n<pre\><code\>/g, "\n");
+  // Paragraphs: two line breaks => <p>{text}</p>
+  // Split the string into blocks
+  const blocks = mdstr.split("\n\n");
 
-  // Escaping Characters
-  return mdstr.replace(/\\([`_~\*\+\-\.\^\\\<\>\(\)\[\]])/gm, "$1");
+  // Process each block
+  for (let i = 0; i < blocks.length; i++) {
+    // If the block is not already enclosed in tags, add <p> tags
+    if (!blocks[i].startsWith("<")) {
+      blocks[i] = `<p>${blocks[i]}</p>`;
+    }
+  }
+
+  // Join the blocks back together
+  mdstr = blocks.join("\n\n");
+
+  return mdstr;
 };
 
 export const simpleMarkdown = (mdText: string): string => {
