@@ -1,6 +1,14 @@
 # Markdown to HTML Converter
 
-This application is a simple Markdown to HTML converter written in TypeScript.
+This application is a simple Markdown to HTML converter written in TypeScript. It supports a limited set of Markdown features, including:
+
+- **Bold**
+- _Italic_
+- `Code`
+- Preformatted text
+- Paragraphs
+
+Please note that this program checks whether the input Markdown file has correct syntax. If it doesn't, it throws an error.
 
 ## Prerequisites
 
@@ -55,5 +63,4 @@ npm run start -- .\\test-markdown.md --out=result.html
 
 ## Revert commit
 
-SHA:
-`37e5eaf3d3e2ac03af0bac7ba7793bc2255bae5c`
+- [Revert commit](https://github.com/forestgreen18/markdown-app/commit/37e5eaf3d3e2ac03af0bac7ba7793bc2255bae5c)
