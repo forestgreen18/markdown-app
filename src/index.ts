@@ -1,4 +1,5 @@
 import { readFileContent } from './fileReader';
+import { convertHtmlToAnsi } from './htmlToANSI';
 import { simpleMarkdown } from './markdownToHtml';
 import { writeFileSync } from 'fs';
 
@@ -25,7 +26,9 @@ async function main() {
     } else if (process.argv[3]) {
       throw new Error(`Unrecognized flag: ${process.argv[3]}`);
     } else {
-      console.log(simpleMarkdown(content));
+      const htmlCode = simpleMarkdown(content);
+      const ANSICode = convertHtmlToAnsi(htmlCode);
+      console.log(ANSICode);
       process.exit(0);
     }
   } catch (error) {
