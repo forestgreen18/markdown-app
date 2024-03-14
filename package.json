@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "start": "node dist/index.js"
   },
   "author": "Illia Kornyk",
@@ -15,9 +15,11 @@
     "@typescript-eslint/parser": "^7.2.0",
     "eslint": "^8.57.0",
     "prettier": "3.2.5",
+    "rimraf": "^5.0.5",
     "typescript": "^5.4.2"
   },
   "dependencies": {
-    "@types/node": "^20.11.26"
+    "@types/node": "^20.11.26",
+    "commander": "^12.0.0"
   }
 }
