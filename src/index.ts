@@ -1,6 +1,6 @@
 import { readFileContent } from './fileReader';
-import { convertHtmlToAnsi } from './htmlToANSI';
-import { simpleMarkdown } from './markdownToHtml';
+import { convertHtmlToAnsi } from './converters/htmlToANSI';
+import { convertMarkdownToHTML } from './converters/markdownToHtml';
 import { writeFileSync } from 'fs';
 
 async function main() {
@@ -20,13 +20,13 @@ async function main() {
         throw new Error('No output file specified');
       }
 
-      const htmlContent = simpleMarkdown(content);
+      const htmlContent = convertMarkdownToHTML(content);
       writeFileSync(outputPath, htmlContent);
       process.exit(0);
     } else if (process.argv[3]) {
       throw new Error(`Unrecognized flag: ${process.argv[3]}`);
     } else {
-      const htmlCode = simpleMarkdown(content);
+      const htmlCode = convertMarkdownToHTML(content);
       const ANSICode = convertHtmlToAnsi(htmlCode);
       console.log(ANSICode);
       process.exit(0);
