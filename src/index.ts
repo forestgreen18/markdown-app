@@ -8,11 +8,9 @@ async function main() {
     const filePath = process.argv[2];
     const content = await readFileContent(filePath);
 
-    // process.argv[3] will be the '--out' flag
-    // process.argv[4] will be the path to the output file
-
-    if (process.argv[3] === "--out") {
-      const outputPath = process.argv[4];
+    // process.argv[3] will be the '--out' flag and the path to the output file
+    if (process.argv[3] && process.argv[3].startsWith("--out")) {
+      const outputPath = process.argv[3].split("=")[1];
       const htmlContent = simpleMarkdown(content);
       writeFileSync(outputPath, htmlContent);
       process.exit(0);
