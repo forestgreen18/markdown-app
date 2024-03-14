@@ -52,7 +52,6 @@ const formatCode = (m: string, p1: string, p2: string): string => {
 
 // function to convert mdString into HTML string
 const formatMD = (mdstr: string): string => {
-  const hrRegex = /^-{3,}|^\_{3,}|^\*{3,}$/gm;
   const codeBlockRegex = /``(.*?)``/gm;
 
   // inline code-block: `code-block` => <code>code-block</code>
@@ -73,7 +72,7 @@ const formatMD = (mdstr: string): string => {
   // Process each block
   for (let i = 0; i < blocks.length; i++) {
     // If the block is not already enclosed in tags, add <p> tags
-    if (!blocks[i].startsWith("<")) {
+    if (!(blocks[i] as string).startsWith("<")) {
       blocks[i] = `<p>${blocks[i]}</p>`;
     }
   }
