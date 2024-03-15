@@ -1,16 +1,13 @@
 import { convertMarkdownToHTML } from '../src/converters/markdownToHtml'; // replace 'your-file' with the actual file name
 import fs from 'fs';
-import path from 'path';
+import { getTestFilePath } from '../utils/getTestFilePath';
 
 describe('convertMarkdownToHTML', () => {
   it('converts valid markdown to HTML', () => {
-    const mdFilePath = path.resolve(__dirname, '../testInputFiles/validMD.md'); // replace with the path to your markdown file
+    const mdFilePath = getTestFilePath('validMD.md');
     const mdContent = fs.readFileSync(mdFilePath, 'utf8');
 
-    const htmlFilePath = path.resolve(
-      __dirname,
-      '../testInputFiles/expected.html'
-    ); // replace with the path to your markdown file
+    const htmlFilePath = getTestFilePath('expected.html');
     const htmlContent = fs.readFileSync(htmlFilePath, 'utf8');
     const expectedOutput = htmlContent; // the expected HTML output
 
@@ -18,10 +15,7 @@ describe('convertMarkdownToHTML', () => {
   });
 
   it('throws an error for invalid markdown syntax', () => {
-    const mdFilePath = path.resolve(
-      __dirname,
-      '../testInputFiles/invalidMD.md'
-    ); // replace with the path to your markdown file
+    const mdFilePath = getTestFilePath('invalidMD.md');
     const mdContent = fs.readFileSync(mdFilePath, 'utf8');
     expect(() =>
       convertMarkdownToHTML(mdContent)

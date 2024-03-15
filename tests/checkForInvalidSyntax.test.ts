@@ -1,13 +1,11 @@
 import { checkForInvalidSyntax } from '../src/converters/markdownToHtml'; // replace 'your-file' with the actual file name
 import fs from 'fs';
-import path from 'path';
+import { getTestFilePath } from '../utils/getTestFilePath';
 
 describe('checkForInvalidSyntax', () => {
   it('identifies invalid markdown syntax', () => {
-    const mdFilePath = path.resolve(
-      __dirname,
-      '../testInputFiles/invalidMD.md'
-    ); // replace with the path to your markdown file
+    const mdFilePath = getTestFilePath('invalidMD.md');
+
     const mdContent = fs.readFileSync(mdFilePath, 'utf8');
 
     const expectedOutput = {
@@ -20,7 +18,7 @@ describe('checkForInvalidSyntax', () => {
   });
 
   it('returns an empty object for valid markdown syntax', () => {
-    const mdFilePath = path.resolve(__dirname, '../testInputFiles/validMD.md'); // replace with the path to your markdown file
+    const mdFilePath = getTestFilePath('validMD.md');
     const mdContent = fs.readFileSync(mdFilePath, 'utf8');
 
     expect(checkForInvalidSyntax(mdContent)).toEqual({});
