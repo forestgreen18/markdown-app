@@ -87,7 +87,6 @@ const formatMD = (mdstr: string): string => {
 
 export const convertMarkdownToHTML = (mdText: string): string => {
   const errors = checkForInvalidSyntax(mdText);
-  console.log(`errors:`, errors);
   if (Object.entries(errors).length > 0) {
     throw new Error(
       `invalid markdown <details are below>\n${JSON.stringify(errors, null, 2)}`
