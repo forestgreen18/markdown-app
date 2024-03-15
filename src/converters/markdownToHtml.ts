@@ -1,4 +1,6 @@
-const checkForInvalidSyntax = (mdContent: string): Record<string, string> => {
+export const checkForInvalidSyntax = (
+  mdContent: string
+): Record<string, string> => {
   const invalidFormat: Record<string, string> = {};
 
   // Define constants for each regex
@@ -85,6 +87,7 @@ const formatMD = (mdstr: string): string => {
 
 export const convertMarkdownToHTML = (mdText: string): string => {
   const errors = checkForInvalidSyntax(mdText);
+  console.log(`errors:`, errors);
   if (Object.entries(errors).length > 0) {
     throw new Error(
       `invalid markdown <details are below>\n${JSON.stringify(errors, null, 2)}`
