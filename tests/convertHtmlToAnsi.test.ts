@@ -1,4 +1,5 @@
-import { convertHtmlToAnsi } from '../src/converters/htmlToANSI'; // replace 'your-file' with the actual file name
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { convertHtmlToAnsi } = require('../src/converters/htmlToANSI');
 
 describe('convertHtmlToAnsi', () => {
   it('converts HTML tags to ANSI escape codes', () => {

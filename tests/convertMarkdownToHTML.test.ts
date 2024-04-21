@@ -1,6 +1,9 @@
-import { convertMarkdownToHTML } from '../src/converters/markdownToHtml'; // replace 'your-file' with the actual file name
-import fs from 'fs';
-import { getTestFilePath } from '../utils/getTestFilePath';
+/* eslint-disable @typescript-eslint/no-var-requires */
+export {}; // Add this line to treat this file as a module
+
+const fs = require('fs');
+const { getTestFilePath } = require('../utils/getTestFilePath');
+const { convertMarkdownToHTML } = require('../src/converters/markdownToHtml');
 
 describe('convertMarkdownToHTML', () => {
   it('converts valid markdown to HTML', () => {

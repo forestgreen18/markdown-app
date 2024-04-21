@@ -1,11 +1,11 @@
-import { checkForInvalidSyntax } from '../src/converters/markdownToHtml'; // replace 'your-file' with the actual file name
-import fs from 'fs';
-import { getTestFilePath } from '../utils/getTestFilePath';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { checkForInvalidSyntax } = require('../src/converters/markdownToHtml');
+const fs = require('fs');
+const { getTestFilePath } = require('../utils/getTestFilePath');
 
 describe('checkForInvalidSyntax', () => {
   it('identifies invalid markdown syntax', () => {
     const mdFilePath = getTestFilePath('invalidMD.md');
-
     const mdContent = fs.readFileSync(mdFilePath, 'utf8');
 
     const expectedOutput = {

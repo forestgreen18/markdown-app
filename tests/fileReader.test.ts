@@ -1,25 +1,37 @@
-import { readFileContent } from '../src/fileReader';
-import * as fs from 'fs';
+/* eslint-disable @typescript-eslint/no-var-requires */
+export {}; // Add this line to treat this file as a module
+const { readFileContent } = require('../src/fileReader');
+const fs = require('fs');
 
-// Explicitly cast fs.readFile to jest.Mock
-const mockedFsReadFile = fs.readFile as unknown as jest.Mock;
-
-jest.mock('fs');
+jest.mock('fs', () => {
+  const originalFs = jest.requireActual('fs');
+  return {
+    ...originalFs,
+    readFile: jest.fn()
+  };
+});
 
 describe('readFileContent', () => {
   it('reads file content', async () => {
-    mockedFsReadFile.mockImplementation((filePath, encoding, cb) =>
-      cb(null, 'file content')
+    (fs.readFile as jest.Mock).mockImplementation(
+      (
+        filePath: string,
+        encoding: string,
+        cb: (err: Error | null, data: string) => void
+      ) => cb(null, 'file content')
     );
 
     const content = await readFileContent('filePath');
-
     expect(content).toEqual('file content');
   });
 
   it('throws error if reading file fails', async () => {
-    mockedFsReadFile.mockImplementation((filePath, encoding, cb) =>
-      cb(new Error('error'))
+    (fs.readFile as jest.Mock).mockImplementation(
+      (
+        filePath: string,
+        encoding: string,
+        cb: (err: Error | null, data?: string) => void
+      ) => cb(new Error('error'))
     );
 
     await expect(readFileContent('filePath')).rejects.toThrow('error');
