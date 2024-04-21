@@ -11,6 +11,7 @@
   "author": "Illia Kornyk",
   "license": "ISC",
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.12",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
