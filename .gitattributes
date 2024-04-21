@@ -1,2 +1,13 @@
-# Auto detect text files and perform LF normalization
+# Set the default behavior, in case people don't have core.autocrlf set.
 * text=auto
+
+# Ensure all text files have LF line endings in the repository
+*.txt text eol=lf
+*.md text eol=lf
+*.html text eol=lf
+
+# Ensure all shell scripts have LF line endings in the repository
+*.sh text eol=lf
+
+# Ensure all Windows-specific files have CRLF line endings in the repository
+*.bat text eol=crlf
