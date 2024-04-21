@@ -1,36 +1,24 @@
-name: Node.js CI
-
+name: Demo GitHub Actions
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
-  build:
-
+  test-job:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20.x]
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Use Node 20.x
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm install
-    - run: npm run build
-    - name: Display versions
-      run: |
-        echo "Node.js version:"
-        node --version
-        echo "npm version:"
-        npm --version
-        echo "TypeScript version:"
-        npx tsc --version
-    - name: Run Jest tests with ts-jest in verbose mode
-      run: npm test -- --runInBand --verbose
+        node-version: '20.x'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Test
+      run: npm test
