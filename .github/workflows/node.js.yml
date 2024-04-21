@@ -14,7 +14,6 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x]
-        # Updated to match your local Node.js version
 
     steps:
     - uses: actions/checkout@v3
@@ -23,6 +22,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install # Changed from npm ci to npm install
+    - run: npm install
     - run: npm run build
-    - run: npm test
+    - name: Display versions
+      run: |
+        echo "Node.js version:"
+        node --version
+        echo "npm version:"
+        npm --version
+        echo "TypeScript version:"
+        npx tsc --version
+    - name: Run Jest tests with ts-jest in verbose mode
+      run: npm test -- --runInBand --verbose
