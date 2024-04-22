@@ -8,6 +8,13 @@ describe('checkForInvalidSyntax', () => {
     const mdFilePath = getTestFilePath('invalidMD.md');
     const mdContent = fs.readFileSync(mdFilePath, 'utf8');
 
+    // Log the mdContent
+    console.log('mdContent:', mdContent);
+
+    const result = checkForInvalidSyntax(mdContent);
+    // Log the result of the checkForInvalidSyntax function
+    console.log('checkForInvalidSyntax result:', result);
+
     const expectedOutput = {
       '**_invalid syntax_**':
         'Embedding styles within each other is prohibited',
