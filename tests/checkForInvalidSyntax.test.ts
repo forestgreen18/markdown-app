@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require('fs');
-const { testCases } = require('../testInputFiles/testCases');
-const { getTestFilePath } = require('../utils/getTestFilePath');
-
 const { checkForInvalidSyntax } = require('../src/converters/markdownToHtml');
+const fs = require('fs');
+const { getTestFilePath } = require('../utils/getTestFilePath');
 
 describe('checkForInvalidSyntax', () => {
   it('identifies invalid markdown syntax', () => {
-    console.log(testCases);
-    const mdContent = testCases.invalidMarkdown;
+    const mdFilePath = getTestFilePath('invalidMD.md');
+    const mdContent = fs.readFileSync(mdFilePath, 'utf8');
 
     const expectedOutput = {
-      '**_invalid syntax_**': 'Embedding styles within each other is prohibited'
+      '**_invalid syntax_**':
+        'Embedding styles within each other is prohibited',
+      '_`invalid code`_': 'Embedding styles within each other is prohibited'
     };
 
     expect(checkForInvalidSyntax(mdContent)).toEqual(expectedOutput);
