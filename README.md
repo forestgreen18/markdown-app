@@ -39,9 +39,9 @@ Once you have compiled the JavaScript files, you can run the application and con
 
 If you want to see the compiled HTML text in console, use the following command:
 
-````bash
-npm run start -- markdownFilePath.md```
-````
+```bash
+npm run start -- markdownFilePath.md
+```
 
 For example, to convert the provided test Markdown file, you can run:
 
@@ -89,11 +89,9 @@ This project is integrated with GitHub Actions for Continuous Integration, runni
 
 This will run all the unit tests defined in the project and provide a report of the test results.
 
-## Revert commit
+## Commits
 
 - [Revert commit](https://github.com/forestgreen18/markdown-app/commit/37e5eaf3d3e2ac03af0bac7ba7793bc2255bae5c)
-
-## Failed CI Tests Commit
 
 - [Failed CI Tests Commit](https://github.com/forestgreen18/markdown-app/commit/3c51dd8aa67ea6b8b2024680a9b8d536d071d13f)
 
