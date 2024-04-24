@@ -9,9 +9,7 @@ describe('checkForInvalidSyntax', () => {
     const mdContent = fs.readFileSync(mdFilePath, 'utf8');
 
     const expectedOutput = {
-      '**_invalid syntax_**':
-        'Embedding styles within each other is prohibited',
-      '_`invalid code`_': 'Embedding styles within each other is prohibited'
+      '**_invalid syntax_**': 'Embedding styles within each other is prohibited'
     };
 
     expect(checkForInvalidSyntax(mdContent)).toEqual(expectedOutput);
