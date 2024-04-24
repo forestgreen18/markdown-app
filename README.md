@@ -1,6 +1,6 @@
-# Markdown to HTML Converter
+# Markdown to HTML and ANSI Converter
 
-This application is a simple Markdown to HTML converter written in TypeScript. It supports a limited set of Markdown features, including:
+This application is a versatile Markdown converter written in TypeScript, capable of converting Markdown files to both HTML and ANSI formatted text. It supports a range of Markdown features, including:
 
 - **Bold**
 - _Italic_
@@ -8,7 +8,9 @@ This application is a simple Markdown to HTML converter written in TypeScript. I
 - Preformatted text
 - Paragraphs
 
-Please note that this program checks whether the input Markdown file has correct syntax. If it doesn't, it throws an error.
+In addition to generating HTML, this program can also convert Markdown to ANSI text, which is used for formatted output in terminals, enhancing readability and user experience.
+
+Please note that this program validates the input Markdown file's syntax. If the syntax is incorrect, it throws an error, ensuring that only valid Markdown is processed.
 
 ## Prerequisites
 
