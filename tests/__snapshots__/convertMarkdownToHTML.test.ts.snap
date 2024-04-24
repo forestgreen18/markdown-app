@@ -3,6 +3,7 @@
 exports[`convertMarkdownToHTML throws an error for invalid markdown syntax 1`] = `
 "invalid markdown <details are below>
 {
-  "**_invalid syntax_**": "Embedding styles within each other is prohibited"
+  "**_invalid syntax_**": "Embedding styles within each other is prohibited",
+  "_\`invalid code\`_": "Embedding styles within each other is prohibited"
 }"
 `;
